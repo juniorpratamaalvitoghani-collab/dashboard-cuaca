@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+:root {
+  --aero-glass-bg: rgba(15, 23, 42, 0.78);
+  --aero-border-glow: rgba(56, 189, 248, 0.28);
+}
+
+.aero-glass-panel {
+  background: var(--aero-glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--aero-border-glow);
+}
