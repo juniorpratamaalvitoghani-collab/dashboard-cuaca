@@ -2247,7 +2247,7 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            {/* Panel Kiri: Peta Jalan Interaktif OpenStreetMap */}
+            {/* Panel Kiri: Peta Jalan Interaktif dengan Tombol Google Maps */}
             {mapViewMode !== 'vanilla' && (
               <div className="flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-800 bg-slate-950">
                 <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3 text-xs">
@@ -2255,16 +2255,23 @@ export default function App() {
                     <Globe className="h-4 w-4 text-sky-400" />
                     <span>Peta Jalan Interaktif: {activeMapPoint.label}</span>
                   </div>
-                  <span className="font-mono text-[11px] text-slate-400">
-                    {activeMapPoint.lat.toFixed(4)}, {activeMapPoint.lng.toFixed(4)}
-                  </span>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${activeMapPoint.lat.toFixed(4)},${activeMapPoint.lng.toFixed(4)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-lg bg-sky-500/15 border border-sky-500/30 px-2.5 py-1 text-[11px] font-semibold text-sky-300 hover:bg-sky-500/25 transition"
+                  >
+                    <span>Buka di Google Maps</span>
+                    <ChevronRight className="h-3 w-3" />
+                  </a>
                 </div>
 
-                <div className="relative h-80 w-full bg-slate-900">
+                {/* overflow-hidden + h-[calc(100%+48px)] otomatis memotong bar putih di bawah peta */}
+                <div className="relative h-80 w-full overflow-hidden bg-slate-900">
                   <iframe
                     title={`Peta Interaktif ${currentCity.name}`}
                     src={osmEmbedUrl}
-                    className="h-full w-full border-0"
+                    className="h-[calc(100%+48px)] w-full border-0"
                     loading="lazy"
                   />
                 </div>
@@ -2274,7 +2281,9 @@ export default function App() {
                     Cuaca di titik ini: <strong className="text-white">{currentCity.condition}</strong> (
                     {convertTemp(currentCity.tempC, tempUnit)}, Hujan {currentCity.rainProb}%)
                   </span>
-                  <span>Sumber Peta: OpenStreetMap</span>
+                  <span className="font-mono text-[10px] text-slate-500">
+                    Koordinat: {activeMapPoint.lat.toFixed(4)}, {activeMapPoint.lng.toFixed(4)}
+                  </span>
                 </div>
               </div>
             )}
